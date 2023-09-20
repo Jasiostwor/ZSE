@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
-    Panel p;
+    Panel P;
     Paint tlo_pola = new Paint();
     Paint tlo_pola2 = new Paint();
 
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main);
+        setContentView(P=new Panel(this));
     }
 
     @Override
@@ -70,6 +70,22 @@ public class MainActivity extends AppCompatActivity {
             super(context);
             tlo_pola.setColor(Color.WHITE);
             tlo_pola2.setColor(Color.BLACK);
+        }
+
+        @Override
+        public void onDraw(Canvas canvas){
+            canvas.drawColor(Color.GRAY);
+            float width = P.getWidth();
+
+            for (int i=0;i<8;i++){
+                for(int j=0;j<8;j++){
+                    if((i+j)%2 == 0){
+                        canvas.drawRect(i*width/8,(i+1)*width/8,(j+1)*width/8, tlo_pola);
+                    }else{
+                        canvas.drawRect(i*width/8,(i+1)*width/8,(j+1)*width/8, tlo_pola2);
+                    }
+                }
+            }
         }
     }
 }
