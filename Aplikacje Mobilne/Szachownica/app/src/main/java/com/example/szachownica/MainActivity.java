@@ -37,30 +37,40 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
 
-        switch (item.getItemId()){
-            case R.id.tworca:
-                Context context = getApplicationContext();
-                CharSequence text = "Twórca: Jan Horodecki";
-                int czas = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context,text,czas);
-                toast.setGravity(Gravity.BOTTOM|Gravity.BOTTOM, 0, 0);
-                toast.show();
-                return true;
-            case R.id.wyjscie:
-                finish();
-                return true;
-            case R.id.kolor1:
-                tlo_pola.setColor(Color.BLACK);
-                tlo_pola2.setColor(Color.WHITE);
-                P.postInvalidate();
-                return true;
-            case R.id.kolor2:
-                tlo_pola.setColor(Color.RED);
-                tlo_pola2.setColor(Color.YELLOW);
-                P.postInvalidate();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if(item.getItemId() == R.id.tworca){
+
+            Context context = getApplicationContext();
+            CharSequence text = "Twórca: Jan Horodecki";
+            int czas = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context,text,czas);
+            toast.setGravity(Gravity.BOTTOM|Gravity.BOTTOM, 0, 0);
+            toast.show();
+
+            return true;
+
+        } else if (item.getItemId() == R.id.wyjscie) {
+
+            finish();
+            return true;
+
+        } else if (item.getItemId() == R.id.kolor1) {
+
+            tlo_pola.setColor(Color.BLACK);
+            tlo_pola2.setColor(Color.WHITE);
+            P.postInvalidate();
+            return true;
+
+        } else if (item.getItemId() == R.id.kolor2) {
+
+            tlo_pola.setColor(Color.RED);
+            tlo_pola2.setColor(Color.YELLOW);
+            P.postInvalidate();
+            return true;
+
+        }else {
+
+            return super.onOptionsItemSelected(item);
+
         }
     }
 
@@ -80,9 +90,9 @@ public class MainActivity extends AppCompatActivity {
             for (int i=0;i<8;i++){
                 for(int j=0;j<8;j++){
                     if((i+j)%2 == 0){
-                        canvas.drawRect(i*width/8,(i+1)*width/8,(j+1)*width/8, tlo_pola);
+                        canvas.drawRect(i*width/8,j*width/8,(i+1)*width/8,(j+1)*width/8, tlo_pola);
                     }else{
-                        canvas.drawRect(i*width/8,(i+1)*width/8,(j+1)*width/8, tlo_pola2);
+                        canvas.drawRect(i*width/8,j*width/8,(i+1)*width/8,(j+1)*width/8, tlo_pola2);
                     }
                 }
             }
