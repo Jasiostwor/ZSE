@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
+import static java.lang.Math.min;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +26,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(P=new Panel(this));
+
+        if(savedInstanceState != null){
+            int tloPola1Color = savedInstanceState.getInt("tloPola1Color");
+            int tloPola2Color = savedInstanceState.getInt("tloPola2Color");
+            tlo_pola.setColor(tloPola1Color);
+            tlo_pola2.setColor(tloPola2Color);
+        }
     }
 
     @Override
@@ -55,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
         } else if (item.getItemId() == R.id.kolor1) {
 
-            tlo_pola.setColor(Color.BLACK);
-            tlo_pola2.setColor(Color.WHITE);
+            tlo_pola.setColor(Color.WHITE);
+            tlo_pola2.setColor(Color.BLACK);
             P.postInvalidate();
             return true;
 
@@ -85,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onDraw(Canvas canvas){
             canvas.drawColor(Color.GRAY);
-            float width = P.getWidth();
+
+            float width = min(P.getWidth(),P.getHeight());
 
             for (int i=0;i<8;i++){
                 for(int j=0;j<8;j++){
@@ -97,5 +106,21 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putInt("tloPola1Color", tlo_pola.getColor());
+        outState.putInt("tloPola2Color", tlo_pola2.getColor());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceData){
+        super.onRestoreInstanceState(savedInstanceData);
+        int tloPola1Color = savedInstanceData.getInt("tloPola1Color");
+        int tloPola2Color = savedInstanceData.getInt("tloPola2Color");
+        tlo_pola.setColor(tloPola1Color);
+        tlo_pola2.setColor(tloPola2Color);
     }
 }
