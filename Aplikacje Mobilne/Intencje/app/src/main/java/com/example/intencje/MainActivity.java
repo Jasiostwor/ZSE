@@ -17,12 +17,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button btnFirtsActivity = (Button) findViewById(R.id.btnName);
+        Button btnSecondActivity = (Button) findViewById(R.id.btnAdress);
 
         btnFirtsActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btnSecondActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("http://www.google.com"));
+                startActivity(myIntent);
             }
         });
     }
