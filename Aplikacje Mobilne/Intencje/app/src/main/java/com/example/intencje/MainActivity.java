@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnFirtsActivity = (Button) findViewById(R.id.btnName);
         Button btnSecondActivity = (Button) findViewById(R.id.btnAdress);
+        Button btnThirdActivity = (Button) findViewById(R.id.btnPosition);
 
         btnFirtsActivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,7 +32,18 @@ public class MainActivity extends AppCompatActivity {
         btnSecondActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("http://www.google.com"));
+                EditText urlPlace = (EditText) findViewById(R.id.urlEditor);
+                String url = String.valueOf(urlPlace.getText());
+
+                Intent myIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(url));
+                startActivity(myIntent);
+            }
+        });
+
+        btnThirdActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MainActivity.this, ThirdActivity.class);
                 startActivity(myIntent);
             }
         });

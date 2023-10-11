@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tbURL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -32,24 +33,25 @@
         android:id="@+id/btnPosition"
         android:layout_width="314dp"
         android:layout_height="58dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginTop="216dp"
         android:text="Wywołaj aktywność z danym położeniem"
-        app:layout_constraintBottom_toTopOf="@+id/tbURL"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.463"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tbURL"
-        android:layout_width="284dp"
-        android:layout_height="74dp"
-        android:layout_marginBottom="368dp"
-        android:textAlignment="viewStart"
-        android:textSize="20sp"
+    <EditText
+        android:id="@+id/urlEditor"
+        android:layout_width="296dp"
+        android:layout_height="49dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="http://"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="http://" />
+        app:layout_constraintTop_toBottomOf="@+id/btnPosition"
+        app:layout_constraintVertical_bias="0.089" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
