@@ -1,5 +1,7 @@
 package com.example.intencje;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,10 +29,6 @@ public class ThirdActivity extends AppCompatActivity {
 
         btnStart = (Button) findViewById(R.id.locStart);
         btnStop = (Button) findViewById(R.id.locStop);
-        if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-
-            return;
-        }
 
 
         locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -48,6 +46,47 @@ public class ThirdActivity extends AppCompatActivity {
             }
         };
 
-        locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,(LocationListener) listener);
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                    ActivityResultLauncher<String[]> locationPermissionRequest = registerForActivityResult(new ActivityResultContracts
+                                    .RequestMultiplePermissions(), result -> {
+                                Boolean fineLocationGranted = result.getOrDefault(
+                                        Manifest.permission.ACCESS_FINE_LOCATION, false);
+                                Boolean coarseLocationGranted = result.getOrDefault(
+                                        Manifest.permission.ACCESS_COARSE_LOCATION,false);
+                                if (fineLocationGranted != null && fineLocationGranted) {
+                                    return;
+                                } else if (coarseLocationGranted != null && coarseLocationGranted) {
+                                    return;
+                                } else {
+                                    return;
+                                }
+                            }
+                    );
+
+                    locationPermissionRequest.launch(new String[] {
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                    });
+                }
+
+                locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,(LocationListener) listener);
+                btnStart.setEnabled(false);
+                btnStop.setEnabled(true);
+            }
+        });
+
+        btnStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                locManager.removeUpdates(listener);
+
+                btnStart.setEnabled(true);
+                btnStop.setEnabled(false);
+            }
+        });
     }
 }
