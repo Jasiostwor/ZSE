@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="225dp"
-        android:layout_height="75dp"
+        android:layout_width="332dp"
+        android:layout_height="70dp"
         android:text="Jan Horodecki"
         android:textAlignment="center"
         android:textSize="34sp"
@@ -22,9 +22,10 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="381dp"
+        android:layout_height="84dp"
         android:text="Kliknij przycisk BACK aby powrócić do poprzedniego ekranu"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.578"

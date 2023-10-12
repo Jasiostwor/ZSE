@@ -51,31 +51,16 @@ public class ThirdActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-                    ActivityResultLauncher<String[]> locationPermissionRequest = registerForActivityResult(new ActivityResultContracts
-                                    .RequestMultiplePermissions(), result -> {
-                                Boolean fineLocationGranted = result.getOrDefault(
-                                        Manifest.permission.ACCESS_FINE_LOCATION, false);
-                                Boolean coarseLocationGranted = result.getOrDefault(
-                                        Manifest.permission.ACCESS_COARSE_LOCATION,false);
-                                if (fineLocationGranted != null && fineLocationGranted) {
-                                    return;
-                                } else if (coarseLocationGranted != null && coarseLocationGranted) {
-                                    return;
-                                } else {
-                                    return;
-                                }
-                            }
-                    );
 
-                    locationPermissionRequest.launch(new String[] {
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION
-                    });
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},0);
+
+                }else {
+                    locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,(LocationListener) listener);
+                    btnStart.setEnabled(false);
+                    btnStop.setEnabled(true);
                 }
 
-                locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,(LocationListener) listener);
-                btnStart.setEnabled(false);
-                btnStop.setEnabled(true);
+
             }
         });
 
@@ -86,6 +71,11 @@ public class ThirdActivity extends AppCompatActivity {
 
                 btnStart.setEnabled(true);
                 btnStop.setEnabled(false);
+
+                tvSzer.setText("0");
+
+
+                tvDlug.setText("0");
             }
         });
     }
