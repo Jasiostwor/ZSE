@@ -1,32 +1,16 @@
 <?php
 
-require("libs/DataBaseConn.php");
+require_once("libs/DataBaseConn.php");
+require_once("libs/Sensor.php");
 
 /**
  * Klasa do autoryzacji jednorazowego dostępu do fragmentu serwisu
- * @author Grzegorz Petri
- * @since 0.2
+ * @author Jan Horodecki
+ * @since 1.0
  */
 
 class AuthBasic
 {
-
-    /**
-     * @desc Generuje kod szyfrowania
-     * @param string $algo Algorytm szyfrowania
-     * @return string Kod szyfrujący
-     */
-    public function genFingerprint($algo)
-    {
-        $userAgent = $_SERVER['HTTP_USER_AGENT'];
-        $remoteAddress = $_SERVER['REMOTE_ADDR'];
-        $uniqueHash = uniqid();
-        $isSecure = true;
-    
-        $dataToHash = $userAgent . $remoteAddress . $uniqueHash . $isSecure;
-        return hash_hmac($algo, $dataToHash, 'YourSecretKey');
-    }
-
     /**
      * @desc Generuje kod wymagany do podania podczas autoryzacji dostępu, wg. podanych parametrów
      * @param int $length Długość kodu - liczba znaków
@@ -42,15 +26,6 @@ class AuthBasic
 
 
     public function compAuthCode($emlAuth, $idzAuth, $authCode)
-    {
-    }
-    public function doAuthByEmail($person, $email)
-    {
-    }
-    public function checkIfValidReqest($person, $email)
-    {
-    }
-    private function checkIfValidReqest2f($emlAuth, $idzAuth)
     {
     }
 
@@ -100,13 +75,15 @@ class AuthBasic
      */
     public function createAuthToken($email, $userId)
     {
+        $sensor = new Sensor();
+
         $authCode = $this->createCode();
         $authDate = date("Y-m-d H:i:s");
 
-        $addrIp = '127.0.0.1'; #TODO ->code
-        $opSys = 'Linux';#TODO @see whichBrowser
-        $browser = 'FF';#TODO @see whichBrowser
-        $fingerprint = $this->genFingerprint("sha512");
+        $addrIp = $sensor->addrIp();
+        $opSys = $sensor->system();
+        $browser = $sensor->browser();
+        $fingerprint = $sensor->genFingerprint("sha512");
         $session_id = "1234567891";
 
         $content = array(
@@ -141,6 +118,6 @@ class AuthBasic
             return $content;
         }else{
             return false;
-        }       
+        }
     }
 }

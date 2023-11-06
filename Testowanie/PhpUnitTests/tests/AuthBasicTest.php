@@ -1,7 +1,6 @@
 <?php
-// załącz plik testowanej klasy - dopasuj ścieżkę do pliku zgodną z własną strukturą katalogów
-require("app/AuthBasic.php");
-// użycie wbudowanych testów
+require_once("app/AuthBasic.php");
+require_once("app/libs/Sensor.php");
 
 use PHPUnit\Framework\TestCase;
 // nazwanie i rozszerzenie własnej klasy klasą `TestCase` zawierającą Asercje do testów 
@@ -55,12 +54,13 @@ class AuthBasicTest extends TestCase
 
     public function testCreateAuthToken()
     {
-        // oczekiwana struktura tokenu z następującymi informacjami
-        // TODO: ip ops browser
+        $sensor = new Sensor();
+
+        
         $exp = array(
-            'addrIp' => "127.0.0.1", 'datetime' => date("Y-m-d H:i:s"),
+            'addrIp' => $sensor->addrIp(), 'datetime' => date("Y-m-d H:i:s"),
             'email' => "janh@testingmail.com", 'authCode' => "131313",
-            'opSystem' => "Linux", 'browser' => "FF"
+            'opSystem' => $sensor->system(), 'browser' => $sensor->browser()
         );
 
         // wywołanie testowanej metody z przykładowymi danymi użytkownika: email i jego IDentyfikator
