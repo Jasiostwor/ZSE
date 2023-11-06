@@ -42,7 +42,7 @@ doc.moveDown();
 doc.font('lato').fontSize(12);
 doc.list(['HTML5, CSS3, ES6', 'Joomla, WordPress, PrestaShop', 'Node.js i React'] , {bulletRadius: 2});
 
-doc.text("Więcej", {link: "google.com"});
+doc.fillColor('blue').text("• Więcej", {link: "google.com", underline: true});
 
 
 doc.end();
